@@ -1,0 +1,15 @@
+<html>
+    <head>
+    <title>Using Flask to display SQLAlchemy</title>
+    </head>
+    <body bgcolor = 'lightblue'>
+        <h1>Here is the PRCP Query</h1></br>
+        <a href="http://127.0.0.1:5000">Home</a>
+        <p>
+            <img src="static/prcp_fig.png"
+            width="700"
+            height="450">
+        </p>
+        <p>{{ prcp | safe}}</p>
+    </body>
+</html>
