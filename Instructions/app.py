@@ -32,6 +32,11 @@ def mosttemp():
     return render_template("mosttemp.html", mosttemp=most_temp_data_df.to_html())
 
 
+@app.route("/jsondata")
+def jsondata():
+    return most_temp_data_df.to_json(date_format="iso", orient="records")
+
+
 engine = create_engine("sqlite:///Resources/hawaii.sqlite")
 
 Base = automap_base()
@@ -57,12 +62,12 @@ prcp_df = prcp_df.sort_values(by=["date"])
 
 prcp_df.assign(date=pd.to_datetime(prcp_df["date"])).groupby(
     pd.Grouper(key="date", freq="1M")
-).mean().plot.bar()
+).mean().plot.bar(figsize=(17, 8))
 plt.xlabel("Date (Mean by Month)", size=25)
 plt.ylabel("Precipitation", size=25)
 plt.legend(fontsize=25)
-plt.xticks(rotation=45)
-plt.savefig(os.path.join("static", "prcp_fig"), dpi=300, bbox_inches="tight")
+plt.xticks(rotation=45, horizontalalignment="right")
+plt.savefig(os.path.join("static", "prcp_fig"), dpi=72, bbox_inches="tight")
 
 # Highest number of temperature observations
 most_temp = (
@@ -92,8 +97,8 @@ most_temp_data_df.assign(date=pd.to_datetime(most_temp_data_df["date"])).groupby
 plt.xlabel("Date (Mean by Month)", size=25)
 plt.ylabel("Precipitation", size=25)
 plt.legend(fontsize=25)
-plt.xticks(rotation=45)
-plt.savefig(os.path.join("static", "temp_fig"), dpi=600, bbox_inches="tight")
+plt.xticks(rotation=45, horizontalalignment="right")
+plt.savefig(os.path.join("static", "temp_fig"), dpi=72, bbox_inches="tight")
 
 if __name__ == "__main__":
     app.run(debug=True)
